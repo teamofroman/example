@@ -9,9 +9,6 @@ servers:
 tags:
   - name: staff
     description: Управление сотрудниками компании
-    externalDocs:
-      description: Find out more
-      url: http://swagger.io
   - name: status
     description: Управление своим статусом
 paths:
