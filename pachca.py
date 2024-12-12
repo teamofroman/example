@@ -23,6 +23,8 @@ class Pachca:
         """Установка нового статуса.
 
         Метод для установки себе нового статуса.
+
+        data - Параметры нового статуса
         """
         try:
             response_json = self.client(method="put", data=data.to_json())
