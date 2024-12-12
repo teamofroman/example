@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Пример Swagger файла
+  description: |-
+    Спецификацияоткрытого API мессанджера
+  version: 0.0.1
+servers:
+  - url: https://api.pachca.com/api/shared/v1
+tags:
+  - name: staff
+    description: Управление сотрудниками компании
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: status
+    description: Управление своим статусом
+paths:
+  /profile/status:
+    get:
+      tags:
+        - status
+      summary: Получение текущего статуса
+      description: Метод для получения информации о своем статусе.
+      operationId: getStatus
+      responses:
+        '200':
+          description: Информация о текущем статусе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponce'
+        '401':
+          description: Требуется авторизация
+    put:
+      tags:
+        - status
+      summary: Установка нового статуса
+      description: Метод для установки себе нового статуса.
+      operationId: putStatus
+      requestBody:
+        description: Параметры нового статуса
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusRequest'
+      responses:
+        '200':
+          description: Установленный статус
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponce'
+        '401':
+          description: Требуется авторизация
+        '422':
+          description: Ошибка в запросе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponce'
+  
+
+components:
+  schemas:
+    Status:
+      description: Статус пользователя
+      type: object
+      properties:
+        emoji:
+          type: string
+          example: 🎮
+          description: Emoji символ статуса
+        title:
+          type: string
+          example: Очень занят
+          description: Текст статуса
+        expires_at:
+          type: string
+          example: 2024-04-08T10:00:00.000Z
+          description: Срок жизни статуса (ISO-8601, UTC+0) в формате YYYY-MM-DDThh:mm:ss.sssZ
+
+    StatusRequest:
+      description: Данные для установки статуса
+      type: object
+      properties:
+        status:
+          description: Данные нового статуса
+          $ref: '#/components/schemas/Status'
+    
+    StatusResponce:
+      description: Информация о текущем статусе
+      type: object
+      properties:
+        data:
+          description: Данные статуса
+          $ref: '#/components/schemas/Status'
+    
+    Error:
+      description: Представляет ошибку обработки запроса
+      type: object
+      properties:
+        key:
+          type: string
+          description: Ключ параметра, в котором произошла ошибка
+        value:
+          type: string
+          description: Значение ключа, которое вызвало ошибку
+        message:
+          type: string
+          description: Ошибка текстом, который вы можете вывести пользователю
+        code:
+          type: string
+          description: Внутренний код ошибки (коды ошибок представлены в описании каждого метода)
+        payload:
+          type: object
+          description: Объект, который предоставляет любую дополнительную информацию (возможные дополнения представлены в описании каждого метода)
+    
+    ErrorResponce:
+      description: Ошибки, выявленные при обработке запроса
+      type: array
+      items:
+        description: Массив ошибок
+        $ref: '#/components/schemas/Error'
+        
