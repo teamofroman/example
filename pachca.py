@@ -1,6 +1,8 @@
 import schemas
 from exceptions import PachcaAPIException
 
+BASE_API_SERVER = "https://api.pachca.com/api/shared/v1"
+
 
 class Pachca:
     def __init__(self, auth_token: str):
