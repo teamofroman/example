@@ -25,7 +25,7 @@ class Pachca:
         Метод для установки себе нового статуса.
         """
         try:
-            response_json = self.client(method="get", data=data.to_json())
+            response_json = self.client(method="put", data=data.to_json())
         except PachcaAPIException as e:
             raise Exception(e)
 
