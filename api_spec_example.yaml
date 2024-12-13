@@ -19,11 +19,6 @@ paths:
       summary: Получение текущего статуса
       description: Метод для получения информации о своем статусе.
       operationId: getStatus
-      parameters:
-        - name: token
-          in: header
-          schema:
-            type: string
       responses:
         '200':
           description: Информация о текущем статусе
